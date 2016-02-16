@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Arvsm</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+  <head>
+    <title>Arvsm</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 
-  <style type="text/css">
-    body {
-      background-color: #DADADA;
-    }
-  </style>
+    <style type="text/css">
+      body {
+        background-color: #DADADA;
+      }
 
-</head>
-<body>
+    </style>
 
-<%= yield %>
+  </head>
+  <body>
+    <div class="ui container">
+      <% if logged_in? %>
+      <div id="menus" class="ui  inverted black menu">
+        <div class="header item">
+          AVRSM
+        </div>
+        <a class=" item">
+          Dashboard
+        </a>
+        <div class="right menu">
+          <%= link_to "Log out", logout_path, method: :delete,class:'ui item' %>
+        </div>
+      </div>
+    <% else %>
 
-</body>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
 </html>
