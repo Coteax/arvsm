@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  response: MyString
+  starting: 2016-02-16 14:44:51
+  ending: 2016-02-16 14:44:51
+  absense_type: MyString
+  status: MyString
+
+two:
+  description: MyString
+  response: MyString
+  starting: 2016-02-16 14:44:51
+  ending: 2016-02-16 14:44:51
+  absense_type: MyString
+  status: MyString
