@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require_tree .
 //= require semantic.min.js
+//= require jquery.datetimepicker.full.min.js
