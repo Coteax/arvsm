@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   resources :requests
+
+  # Routes for Sessions controller
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
