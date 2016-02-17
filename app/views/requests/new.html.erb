@@ -3,83 +3,93 @@
     $('.ui.radio.checkbox').checkbox();
     $('.ui.dropdown').dropdown();
 
-    jQuery('#startdate').datetimepicker({
-      timepicker:false,
-      format: 'Y/m/d'
-    });
-    jQuery('#enddate').datetimepicker({
-      timepicker:false,
-      format: 'Y/m/d'
-    });
-    jQuery('#hour_start').datetimepicker({
-      timepicker:true,
-      datepicker:false,
-      format: 'H:i'
+    jQuery('#request_starting').datetimepicker({timepicker: false, format: 'Y/m/d'});
+    jQuery('#request_ending').datetimepicker({timepicker: false, format: 'Y/m/d'});
+    jQuery('#request_partial_starting').datetimepicker({timepicker: false, format: 'Y/m/d'});
 
-    });
-    jQuery('#hour_end').datetimepicker({
-      timepicker:true,
-      datepicker:false,
-      format: 'H:i'
+    jQuery('#request_time_starting').datetimepicker({timepicker: true, datepicker: false, format: 'H:i'});
+    jQuery('#request_time_ending').datetimepicker({timepicker: true, datepicker: false, format: 'H:i'});
+    var AbsenseType = $('input:radio');
 
+    AbsenseType.change(function () {
+      if ($(this).val() == 'partial') {
+        $("#absense_fields").hide();
+        $("#absense_partial_fields").show();
+      } else {
+        $("#absense_fields").show();
+        $("#absense_partial_fields").hide();
+      }
     });
 
+   AbsenseType.filter(':checked').change();
   });
 </script>
 
-  <div class="ui segment">
-    <div class="ui form">
-      <h4 class="ui dividing header">Create a new Absense Request</h4>
-      <%= form_for(@request) do |f| %>
-      <div class="inline fields">
-        <label for="fruit">Select your absense type</label>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <%= f.radio_button :absense_type, 'absense_full'  %>
-            <label>Full</label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <%= f.radio_button :absense_type, 'absense_partial'  %>
-            <label>Partial</label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <%= f.radio_button :absense_type, 'absense_sickness'  %>
-            <label>Sickness</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="fields">
-        <div class="field">
-          <label>Absense Start Date</label>
-          <input id="startdate" type="text" placeholder="">
-        </div>
-        <div class="field">
-          <label>Absense End Date</label>
-          <input id="enddate" type="text" placeholder="">
-        </div>
-        <div class="field">
-          <label>Hour Start</label>
-          <input id="hour_start" type="text" placeholder="">
-        </div>
-        <div class="field">
-          <label>Hour End</label>
-          <input id="hour_end" type="text" placeholder="">
+<div class="ui segment">
+  <div class="ui form">
+    <h4 class="ui dividing header">Create a New Absense Request</h4>
+    <%= form_for(@request) do |f| %>
+    <div class="inline fields">
+      <label>Select your absense type</label>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <%= f.radio_button :absense_type, 'full'  %>
+          <label>Full</label>
         </div>
       </div>
       <div class="field">
-        <label>Assign to</label>
-        <%= f.select :description, options_from_collection_for_select(@users, 'id', 'name'),{},{ class: "ui search dropdown"} %>
+        <div class="ui radio checkbox">
+          <%= f.radio_button :absense_type, 'sickness'  %>
+          <label>Sickness</label>
+        </div>
       </div>
       <div class="field">
-        <%= f.label :description %>
-        <%= f.text_area :description, rows:5 %>
+        <div class="ui radio checkbox">
+          <%= f.radio_button :absense_type, 'partial'  %>
+          <label>Partial</label>
+        </div>
       </div>
-      <%= f.submit "Submit Request", class: "ui green button" %>
-      <% end %>
     </div>
+
+    <div id="absense_fields" class="fields">
+      <div class="field">
+        <label>Absense Start Date</label>
+        <%= f.text_field :starting %>
+      </div>
+      <div class="field">
+        <label>Absense End Date</label>
+        <%= f.text_field :ending %>
+      </div>
+      <div class="field">
+        <label>Working Days</label>
+        <%= f.text_field :days_off %>
+      </div>
+    </div>
+
+    <div id="absense_partial_fields" class="fields">
+      <div class="field">
+        <label>Absense Date</label>
+        <%= f.text_field :partial_starting  %>
+      </div>
+      <div class="field">
+        <label>Hour Start</label>
+        <%= f.text_field :time_starting %>
+      </div>
+      <div class="field">
+        <label>Hour End</label>
+        <%= f.text_field :time_ending %>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Assign to</label>
+      <%= f.select(:user_assigned_id, User.where(is_manager:true).collect {|p| [ p.name, p.id ] },{},{ class: "ui search dropdown"} )%>
+    </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows:5 %>
+    </div>
+    <%= f.submit "Submit Request", class: "ui green button" %>
+    <% end %>
   </div>
+</div>

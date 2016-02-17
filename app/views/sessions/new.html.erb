@@ -5,7 +5,6 @@
   .column {
     max-width: 450px;
   }
-
 </style>
 <div class="ui  aligned center aligned grid">
   <div class="column" style="margin-top:50px">
@@ -18,9 +17,9 @@
 
     <%= form_for(:session, url: login_path,html:{ class:'ui large form'}) do |f| %>
     <% flash.each do |message_type, message| %>
-            <div class="ui error visible attached message"><%= message %></div>
+    <div class="ui error visible attached message"><%= message %></div>
     <% end %>
-    
+
     <div class="ui stacked segment">
 
       <div class="field">
@@ -37,10 +36,6 @@
       </div>
       <%= f.submit "Login", class: 'ui fluid large red submit button' %>
     </div>
-
-
-
-
     <% end %>
     <!--
     <div class="ui message">
