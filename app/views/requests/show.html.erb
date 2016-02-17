@@ -11,8 +11,8 @@
     <h4 class="ui image header">
       <img src="/chris.png" class="ui mini rounded image">
       <div class="content">
-        Chris Veleras
-        <div class="sub header">Ruby on Rails Developer
+        <%= @request.user.name %>
+        <div class="sub header">  <%= @request.user.position %>
         </div>
       </div>
     </h4>
@@ -30,10 +30,12 @@
       <div class="fields">
         <div class="field">
           <label>From</label>
+          <%= @request.starting %>
           Friday, 19 February 2016
         </div>
         <div class="field">
           <label>To</label>
+          <%= @request.ending %>
           Tuesday, 23 February 2016
         </div>
         <div class="field">
@@ -44,7 +46,7 @@
       <div class="fields">
         <div class="field">
           <label>Description</label>
-          <div>Lorem Ipsum</div>
+          <div><%= @request.description %></div>
         </div>
       </div>
 
@@ -53,10 +55,12 @@
   </div>
 
   <div class="ui segment">
+    <%= form_for(@request) do |f| %>
     <div class="ui form">
+
       <div class="field">
         <label>Reply comment</label>
-        <textarea rows="5"></textarea>
+        <%= f.text_area :response, rows:5 %>
       </div>
       <div class=" content">
         <div class="ui  buttons">
@@ -65,8 +69,8 @@
           <div class="ui negative submit  button">Deny</div>
         </div>
       </div>
-
     </div>
+    <% end %>
   </div>
 
 </div>

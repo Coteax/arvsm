@@ -21,26 +21,32 @@
       }
     });
 
-   AbsenseType.filter(':checked').change();
+    AbsenseType.filter(':checked').change();
   });
 </script>
-<ul>
-   <% @request.errors.full_messages.each do |msg| %>
-     <li><%= msg %></li>
-   <% end %>
-   </ul>
 
-   <div class="ui breadcrumb">
-   <a class="section" href="/">Dashboard</a>
-   <div class="divider">
-     /
-   </div>
-   </div>
+
+<div class="ui breadcrumb">
+  <a class="section" href="/">Dashboard</a>
+  <div class="divider">
+    /
+  </div>
+</div>
 
 <div class="ui segment">
-  <div class="ui form">
+  <div class="ui form <%= @request.errors.any? ? 'error' : '' %>">
     <h3 class="ui dividing header">Create a New Absense Request</h3>
     <%= form_for(@request) do |f| %>
+
+    <div class="ui error message">
+      <div class="header">Please fix following errors</div>
+      <ul class="list">
+        <% @request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+
     <div class="inline fields">
       <label>Select your absense type</label>
       <div class="field">

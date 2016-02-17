@@ -9,13 +9,20 @@ class RequestsController < ApplicationController
     # Set non user supplied data user and status
     @request.user = current_user
     @request.status = Request.statuses[:requested]
+    if @request.partial?
+      @request.starting = Time.parse(@request.time_starting)
+      @request.ending = Time.parse(@request.time_ending)
+    end
 
-
-    @request.save
-    render :new
+    if @request.save
+        redirect_to :root
+    else
+      render :new
+    end
   end
 
   def show
+     @request = Request.find(params[:id])
   end
 
   def index
