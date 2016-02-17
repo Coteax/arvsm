@@ -10,7 +10,7 @@ class RequestsController < ApplicationController
     @request.user = current_user
     @request.status = Request.statuses[:requested]
 
-  
+
     @request.save
     render :new
   end

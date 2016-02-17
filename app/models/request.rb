@@ -1,9 +1,22 @@
 class Request < ActiveRecord::Base
+  # Non persisting helper atrributes
+  attr_accessor :partial_starting, :time_starting, :time_ending
+
   belongs_to :user
   belongs_to :user_assigned, class_name: 'User'
-  validates :user_id,:user_assigned, presence: true
-  validates :absense_type, presence: true
-  validates :description, presence: true, length: { minimum: 20 }
+  # Validations
+  validates :user_id, :user_assigned, :absense_type, :description,
+            presence: true
+
+  validates :starting, :ending, :days_off, presence: true ,unless: :is_partial?
+  validates :partial_starting, :time_starting,
+            :time_ending, presence: true ,if: :is_partial?
+
+  validates :days_off, numericality: { only_integer: true,
+                                       greater_than_or_equal_to: 1 },
+                                       unless: :is_partial?
+
+  validates :description, length: { minimum: 20 }
 
   enum status: { requested: 'status_requested',
                  approved: 'status_approved',
@@ -15,9 +28,12 @@ class Request < ActiveRecord::Base
 
   after_initialize :set_default_values
 
-  attr_accessor :partial_starting, :time_starting, :time_ending
   def set_default_values
     # Set default absense_type
     self.absense_type ||= Request.absense_types[:full]
+  end
+
+  def is_partial?
+    self.partial?
   end
 end

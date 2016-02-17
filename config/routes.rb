@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'dashboard#index'
+
   resources :requests
 
   # Routes for Sessions controller
