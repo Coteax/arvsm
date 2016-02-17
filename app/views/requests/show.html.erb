@@ -10,7 +10,7 @@
   <div class="divider">
     /
   </div>
-   <div class="active section">Validate Request</div>
+  <div class="active section">Validate Request</div>
 </div>
 
 <div class="ui segments">
@@ -20,7 +20,8 @@
       <img src="/chris.png" class="ui mini rounded image">
       <div class="content">
         <%= @request.user.name %>
-        <div class="sub header">  <%= @request.user.position %>
+        <div class="sub header">
+          <%= @request.user.position %>
         </div>
       </div>
     </h4>
@@ -32,25 +33,47 @@
       <div class="fields">
         <div class="field">
           <label>Absense Type</label>
-          <a class="ui label">Full Absene</a>
+          <a class="ui label"><%= t "request_absense_type.#{@request.absense_type}" %>
+            Absense
+          </a>
         </div>
       </div>
+
       <div class="fields">
+        <% if @request.partial? %>
+
         <div class="field">
-          <label>From</label>
-          <%= @request.starting %>
-          Friday, 19 February 2016
+          <label>Date</label>
+          <%= l @request.starting.to_date, format: :long  %>
         </div>
         <div class="field">
-          <label>To</label>
-          <%= @request.ending %>
-          Tuesday, 23 February 2016
+          <label>Starting</label>
+          <%= l @request.starting, format:  '%H:%M'  %>
         </div>
         <div class="field">
-          <label>Days</label>
-          <a class="ui tiny label">10</a>
+          <label>Ending</label>
+          <%= l @request.ending, format:  '%H:%M'  %>
         </div>
+
+      <% else %>
+
+        <div class="field">
+          <label>Starting</label>
+          <%= l @request.starting.to_date, format: :long  %>
+        </div>
+        <div class="field">
+          <label>Ending</label>
+          <%= l @request.ending.to_date, format: :long  %>
+        </div>
+        <div class="field">
+          <label>Working Days</label>
+          <a class="ui tiny label"><%= @request.days_off %></a>
+        </div>
+
+        <% end %>
+
       </div>
+
       <div class="fields">
         <div class="field">
           <label>Description</label>
@@ -66,15 +89,24 @@
     <%= form_for(@request) do |f| %>
     <div class="ui form">
 
+      <div class="ui error message">
+        <div class="header">Please fix the following errors</div>
+        <ul class="list">
+          <% @request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+
       <div class="field">
         <label>Reply comment</label>
         <%= f.text_area :response, rows:5 %>
       </div>
       <div class=" content">
         <div class="ui  buttons">
-          <div class="ui positive  submit button">Approve</div>
+          <%= f.submit 'Approve' , class: 'ui positive  submit button', name: 'approve' %>
           <div class="or"></div>
-          <div class="ui negative submit  button">Deny</div>
+          <%= f.submit 'Deny' , class: 'ui negative  submit button',name:'deny' %>
         </div>
       </div>
     </div>

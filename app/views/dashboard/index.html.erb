@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <table class="ui red celled table">
+  <table class="ui red celled unstackable table">
     <thead>
       <tr>
         <th>Type</th>
@@ -71,10 +71,10 @@
           <strong><%= l request.ending.to_date, format: :long %></strong>
           <% end %>
         </td>
-        <td>
+        <td class="collapsing center aligned">
           <% unless request.partial? %>
-          <a class="ui label"><%=  request.days_off %>
-            <div class="detail">Days</div>
+          <a class="ui circular label"><%=  request.days_off %>
+
           </a>
           <% end %>
         </td>
@@ -85,7 +85,7 @@
         <td class="collapsing">
           <div class="request_response_container" style="display:none"><%= request.response %></div>
           <% unless request.requested? %>
-          <button class="ui right floated tiny basic button modal-trigger">
+          <button class="ui tiny basic orange button modal-trigger">
             <i class="info circle icon"></i>
             Details
           </button>
