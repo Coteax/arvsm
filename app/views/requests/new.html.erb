@@ -31,6 +31,7 @@
   <div class="divider">
     /
   </div>
+   <div class="active section">New Absense Request</div>
 </div>
 
 <div class="ui segment">
@@ -39,7 +40,7 @@
     <%= form_for(@request) do |f| %>
 
     <div class="ui error message">
-      <div class="header">Please fix following errors</div>
+      <div class="header">Please fix the following errors</div>
       <ul class="list">
         <% @request.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

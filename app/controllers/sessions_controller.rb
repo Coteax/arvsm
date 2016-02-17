@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-     redirect_to requests_path if logged_in? 
+     redirect_to requests_path if logged_in?
   end
 
   def create
@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     # authenticate is provided from gem
     if user && user.authenticate(params[:session][:password])
       log_in user
-      redirect_to requests_path
+      redirect_to :root
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'

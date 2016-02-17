@@ -1,65 +1,99 @@
+<script type="text/javascript">
+  $(function () {
+    $('.modal-trigger').click(function () {
+      var message=$(this).parents('tr').find('.request_response_container').html();
+      $('.modal .content').html(message);
+      $('.modal').modal('show');
+    });
+
+  });
+</script>
 <div class="ui breadcrumb">
-<a class="section">Dashboard</a>
-<div class="divider">
-  /
-</div>
-</div>
-
-
-<div class="ui grid">
-  <div class="sixteen wide column">
-    <a href="/requests/new" class="ui right floated small primary labeled icon button">
-      <i class="icon plane"></i>
-      New Absense Request
-    </a>
+  <a class="section">Dashboard</a>
+  <div class="divider">
+    /
   </div>
-
 </div>
-
-
+<div class="ui modal">
+  <div class="header">Response for your absense request</div>
+  <div class="content">
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+</div>
 
 <div class="ui segment">
-  <h2>My Requests</h2>
+  <div class="ui grid">
+    <div class="eight wide column">
+      <h2>My Requests</h2>
+    </div>
+    <div class="eight wide column">
+      <a href="/requests/new" class="ui right floated normal primary labeled icon button">
+        <i class="icon plane"></i>
+        New Absense Request
+      </a>
+    </div>
+  </div>
 
-  <table class="ui four column red celled table">
+  <table class="ui red celled table">
     <thead>
       <tr>
-        <th>Period of Absense</th>
-        <th >Type</th>
+        <th>Type</th>
+        <th>Starting</th>
+        <th>Ending</th>
+        <th>Days</th>
         <th>Assigned To</th>
         <th >Status</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <%@requests.each do |request| %>
+      <tr class="<%='positive' if request.approved? %>
+                 <%='negative' if request.denied? %>">
+        <td><%= t "request_absense_type.#{request.absense_type}" %>
+          Absense</td>
         <td>
-          <a class="ui blue label">10
+          <% if request.partial? %>
+          <strong><%= l request.starting.to_date, format: :long  %></strong>
+          -
+          <strong><%= l request.starting, format:  '%H:%M'  %></strong>
+        <% else %>
+          <strong><%= l request.starting.to_date, format: :long %></strong>
+          <% end %>
+
+        </td>
+        <td>
+          <% if request.partial? %>
+          <strong><%= l request.ending, format: '%H:%M'  %></strong>
+        <% else %>
+          <strong><%= l request.ending.to_date, format: :long %></strong>
+          <% end %>
+        </td>
+        <td>
+          <% unless request.partial? %>
+          <a class="ui label"><%=  request.days_off %>
             <div class="detail">Days</div>
           </a>
+          <% end %>
         </td>
+        <td><%= request.user_assigned.name %></td>
+        <td >
+          <strong><%= I18n.t "request_status.#{request.status}" %></strong>
+        </td>
+        <td class="collapsing">
+          <div class="request_response_container" style="display:none"><%= request.response %></div>
+          <% unless request.requested? %>
+          <button class="ui right floated tiny basic button modal-trigger">
+            <i class="info circle icon"></i>
+            Details
+          </button>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
 
-        <td>No Action</td>
-        <td>No Action</td>
-        <td class="selectable">
-          <a href="#">Requested</a>
-        </td>
-      </tr>
-      <tr class="positive">
-        <td>John</td>
-        <td>No Action</td>
-        <td>No Action</td>
-        <td class="selectable ">
-          <a href="#">Approved</a>
-        </td>
-      </tr>
-      <tr class="negative">
-        <td>John</td>
-        <td>No Action</td>
-        <td>No Action</td>
-        <td class="selectable">
-          <a href="#">Denied</a>
-        </td>
-      </tr>
     </tbody>
   </table>
 </div>

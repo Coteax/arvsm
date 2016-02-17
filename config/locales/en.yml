@@ -21,3 +21,18 @@
 
 en:
   hello: "Hello world"
+en:
+  activerecord:
+    attributes:
+      request:
+        starting: "Starting Date"
+        starting: "Ending Date"
+        days_off: "Working Days"
+  request_status:
+    requested: "Requested"
+    approved: "Approved"
+    denied:   "Denied"
+  request_absense_type:
+    full: "Full"
+    sickness: "Sickness"
+    partial: "Partial"
