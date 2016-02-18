@@ -4,13 +4,13 @@ class RequestsController < ApplicationController
   # Confirm user is authorized as manager to process requests
   before_action :user_is_assigned_to_request, only: [:show, :update]
 
+  # New Absense Request action
   def new
     @request = Request.new
   end
 
   def create
     @request = Request.new(create_params)
-
     # Set request's user to current user
     @request.user = current_user
     # Set request status to Requested
@@ -30,6 +30,9 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      # Send email to assigned manager
+      Mailer.notify_incoming_request.deliver_later
+
       flash[:success] = 'Your absense request has been submitted successfully!'
       redirect_to root_path
     else
@@ -51,6 +54,8 @@ class RequestsController < ApplicationController
     end
 
     if @request.update_attributes(update_params)
+      # Send email to requester about the status change
+      Mailer.notify_changed_request_status.deliver_later
       redirect_to incoming_path
     else
       render 'show'
@@ -58,7 +63,6 @@ class RequestsController < ApplicationController
   end
 
   private
-
   # Allowed parameters for request creation
   def create_params
     params.require(:request).permit(:description, :absense_type,

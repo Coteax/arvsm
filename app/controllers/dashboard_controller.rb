@@ -4,11 +4,12 @@ class DashboardController < ApplicationController
   # Confirm user is authorized as manager to view incoming
   before_action :user_is_manager, only: [:incoming]
 
+  # View own requests
   def index
     @requests = current_user.requests.order(updated_at: :desc)
   end
 
-  #View incoming requests
+  # View incoming requests
   def incoming
     @requests = current_user.assigned_requests.order(created_at: :desc)
   end
