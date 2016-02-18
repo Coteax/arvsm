@@ -18,6 +18,7 @@ This application allows every user/employee, no matter the hierarchy, to place a
 - Managers can optionally include a response to the requester
 - Managers can approve or deny a request
 ###Screenshots
+
 ![Imgur](http://i.imgur.com/KxO0YUs.png)
 
 ![Imgur](http://i.imgur.com/DhFaaWf.png)
