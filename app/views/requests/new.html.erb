@@ -102,7 +102,11 @@
 
     <div class="field">
       <label>Assign to</label>
-      <%= f.select(:user_assigned_id, User.where(is_manager:true).collect {|p| [ p.name, p.id ] },{},{ class: "ui search dropdown"} )%>
+      <%= f.select(:user_assigned_id,
+                   User.where(is_manager:true)
+                       .where.not(id:current_user.id)
+                       .collect {|p| [ p.name, p.id ] },
+                   {},{ class: "ui search dropdown"} )%>
     </div>
     <div class="field">
       <%= f.label :description %>

@@ -7,6 +7,10 @@
 
     });
 
+
+   $('.ui .success').delay(4000).fadeOut();
+   //
+
   });
 </script>
 <div class="ui breadcrumb">
@@ -15,6 +19,15 @@
     /
   </div>
 </div>
+<% flash.each do |message_type, message| %>
+<div class="ui success visible floating message">
+  <div class="header">
+   Success
+  </div>
+  <p><%= message %></p>
+</div>
+<% end %>
+
 <div class="ui modal">
   <div class="header">Response for your absense request</div>
   <div class="content">

@@ -26,6 +26,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      flash[:success] = 'Your absense request has been submitted successfully!'
       redirect_to root_path
     else
       render :new
@@ -46,7 +47,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.update_attributes(update_params)
-      redirect_to root_path
+      redirect_to incoming_path
     else
       render 'show'
     end

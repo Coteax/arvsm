@@ -21,14 +21,18 @@
         <div class="header item">
           AVRSM
         </div>
-        <a class=" item">
-          Dashboard
-        </a>
+          <%= link_to "My Requests", root_path,
+                      class:'ui red item' %>
+
+          <%= link_to "Incoming Requets", incoming_path,
+                      class:'ui red item' if current_user.is_manager? %>
+
+
 
         <div class="right menu">
           <div class="vertically fitted red item">
       <%=current_user.name %>
-    </div> 
+    </div>
          <%= link_to "Log out", logout_path, method: :delete,class:'ui item' %>
         </div>
       </div>
