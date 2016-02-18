@@ -1,7 +1,10 @@
 <script type="text/javascript">
   $(function () {
     $('.modal-trigger').click(function () {
-       $(this).closest('tr').next('tr').toggle();
+      var closest = $(this).closest('tr').next('tr');
+      $("[data-request-response]").not(closest).hide();
+      closest.toggle();
+
     });
 
   });
@@ -50,7 +53,8 @@
       <%@requests.each do |request| %>
       <tr class="<%='positive' if request.approved? %>
                  <%='negative' if request.denied? %>">
-        <td><strong><%= t "request_absense_type.#{request.absense_type}" %></strong>
+        <td>
+          <strong><%= t "request_absense_type.#{request.absense_type}" %></strong>
           Absense</td>
         <td>
           <% if request.partial? %>
@@ -81,7 +85,7 @@
           <strong><%= I18n.t "request_status.#{request.status}" %></strong>
         </td>
         <td class="collapsing">
-            <% unless request.requested? %>
+          <% unless request.requested? %>
           <button class="ui tiny basic button modal-trigger">
             <i class="comment icon"></i>
             Response
@@ -89,12 +93,14 @@
           <% end %>
         </td>
       </tr>
-  <% unless request.requested? %>
-      <tr style="display:none"><td colspan="7">
-<h5><%= request.user_assigned.name %> response:</h5>
-        <%= request.response %></td></tr>
+      <% unless request.requested? %>
+      <tr data-request-response style="display:none">
+        <td colspan="7">
+          <h5><%= request.user_assigned.name %> commented:</h5>
+          <%= request.response %></td>
+      </tr>
       <% end %>
-<% end %>
+      <% end %>
     </tbody>
   </table>
 </div>

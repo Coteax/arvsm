@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-     redirect_to requests_path if logged_in?
+     redirect_to :root if logged_in?
   end
 
   def create

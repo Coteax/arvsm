@@ -9,7 +9,7 @@ class Request < ActiveRecord::Base
                        partial: 'absense_partial' }
 
   # Non persisted helper atrributes for partial absense
-  attr_accessor :partial_starting, :time_starting, :time_ending
+  attr_accessor  :time_starting, :time_ending
 
   belongs_to :user
   belongs_to :user_assigned, class_name: 'User'
@@ -39,7 +39,6 @@ class Request < ActiveRecord::Base
   end
 
   def is_partial_and_new
-p self.partial? && self.new_record?
     partial? && new_record?
   end
 

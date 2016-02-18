@@ -1,17 +1,28 @@
 class RequestsController < ApplicationController
+  before_action :logged_in_user
+  before_action :user_is_assigned_to_request, only: [:show, :update]
+  # show/update only Manager
+
   def new
     @request = Request.new
   end
 
   def create
     @request = Request.new(create_params)
-
     # Set non user supplied data user and status
     @request.user = current_user
     @request.status = Request.statuses[:requested]
     if @request.partial?
-      @request.starting = Time.parse(@request.time_starting)
-      @request.ending = Time.parse(@request.time_ending)
+      p @request.starting
+      p @request.partial_starting
+      time = Time.parse(@request.time_starting)
+
+      date_starting = DateTime.parse(@request.partial_starting)
+      time = date_starting.change(hour: time.hour)
+      @request.starting = time
+      time = Time.parse(@request.time_ending)
+      time = date_starting.change(hour: time.hour)
+      @request.ending = time
     end
 
     if @request.save
@@ -25,9 +36,6 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
   end
 
-  def index
-  end
-
   def update
     @request = Request.find(params[:id])
 
@@ -39,7 +47,7 @@ class RequestsController < ApplicationController
 
     if @request.update_attributes(update_params)
       redirect_to root_path
-    else          
+    else
       render 'show'
     end
   end
@@ -56,4 +64,11 @@ class RequestsController < ApplicationController
   def update_params
     params.require(:request).permit(:response)
   end
+
+  def user_is_assigned_to_request
+    request = Request.find(params[:id])
+    redirect_to(root_url) unless request.user_assigned == current_user
+  end
+
+
 end
