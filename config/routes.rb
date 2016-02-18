@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-
+  # Routes for Dashboard controller
   root 'dashboard#index'
   get 'incoming' => 'dashboard#incoming'
+
+  # RESTFul resources for Request
   resources :requests
 
   # Routes for Sessions controller

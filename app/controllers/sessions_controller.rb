@@ -1,8 +1,9 @@
 class SessionsController < ApplicationController
+  # Show the login form
   def new
     redirect_to :root if logged_in?
   end
-
+  # Authentication from login form
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     # authenticate is provided from gem
@@ -18,7 +19,7 @@ class SessionsController < ApplicationController
       render 'new'
     end
   end
-
+  # Signout action
   def destroy
     log_out if logged_in?
     redirect_to login_url

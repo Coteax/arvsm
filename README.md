@@ -34,6 +34,7 @@ In order to run the application
 #### Employee
 - **email:** alonzo@gmail.com  **password:**  demo
 - **email:** james@gmail.com  **password:**  demo
+
 #### Manager
 - **email:** sherman@gmail.com  **password:**  demo
 - **email:** darin@gmail.com  **password:**  demo

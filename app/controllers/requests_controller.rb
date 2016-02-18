@@ -1,7 +1,8 @@
 class RequestsController < ApplicationController
+  # Confirm user is authenticated
   before_action :logged_in_user
+  # Confirm user is authorized as manager to process requests
   before_action :user_is_assigned_to_request, only: [:show, :update]
-  # show/update only Manager
 
   def new
     @request = Request.new
@@ -9,9 +10,12 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new(create_params)
-    # Set non user supplied data user and status
+
+    # Set request's user to current user
     @request.user = current_user
+    # Set request status to Requested
     @request.status = Request.statuses[:requested]
+    # TODO: dates
     if @request.partial?
       p @request.starting
       p @request.partial_starting
@@ -39,7 +43,7 @@ class RequestsController < ApplicationController
 
   def update
     @request = Request.find(params[:id])
-
+    # Change request status based on approval or denial
     if params['approve']
       @request.status = Request.statuses[:approved]
     elsif params['deny']
@@ -55,6 +59,7 @@ class RequestsController < ApplicationController
 
   private
 
+  # Allowed parameters for request creation
   def create_params
     params.require(:request).permit(:description, :absense_type,
                                     :user_assigned_id, :partial_starting,
@@ -62,14 +67,14 @@ class RequestsController < ApplicationController
                                     :time_starting, :time_ending)
   end
 
+  # Allowed parameters for request update
   def update_params
     params.require(:request).permit(:response)
   end
 
+  # Managers should view only their assigned requests
   def user_is_assigned_to_request
     request = Request.find(params[:id])
     redirect_to(root_url) unless request.user_assigned == current_user
   end
-
-
 end

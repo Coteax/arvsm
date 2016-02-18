@@ -4,13 +4,8 @@
       var closest = $(this).closest('tr').next('tr');
       $("[data-request-response]").not(closest).hide();
       closest.toggle();
-
     });
-
-
-   $('.ui .success').delay(4000).fadeOut();
-   //
-
+    $('.ui .success').delay(4000).fadeOut();
   });
 </script>
 <div class="ui breadcrumb">
@@ -22,7 +17,7 @@
 <% flash.each do |message_type, message| %>
 <div class="ui success visible floating message">
   <div class="header">
-   Success
+    Success
   </div>
   <p><%= message %></p>
 </div>
@@ -109,7 +104,8 @@
       <% unless request.requested? %>
       <tr data-request-response style="display:none">
         <td colspan="7">
-          <h5><%= request.user_assigned.name %> commented:</h5>
+          <h5><%= request.user_assigned.name %>
+            commented:</h5>
           <%= request.response %></td>
       </tr>
       <% end %>
