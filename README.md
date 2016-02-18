@@ -30,6 +30,14 @@ In order to run the application
 - `db:setup` Setup and seed the database
 - `rails s` Run embedded rails server
 
+### Demo crendentials
+#### Employee
+- **email:** alonzo@gmail.com  **password:**  demo
+- **email:** james@gmail.com  **password:**  demo
+#### Manager
+- **email:** sherman@gmail.com  **password:**  demo
+- **email:** darin@gmail.com  **password:**  demo
+
 ###Specifications
 - Ruby on Rails v4.2.x
 - PostgreSQL 8.4
