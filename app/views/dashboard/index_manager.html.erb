@@ -1,9 +1,11 @@
 <script type="text/javascript">
   $(function () {
-    $('.modal-trigger').click(function () {
-       $(this).closest('tr').next('tr').toggle();
+  /*  $('.modal-trigger').click(function () {
+      var message = $(this).parents('tr').find('.request_response_container').html();
+      $('.modal .content').html(message);
+      $('.modal').modal('show');
     });
-
+*/
   });
 </script>
 <div class="ui breadcrumb">
@@ -24,7 +26,7 @@
 <div class="ui segment">
   <div class="ui grid">
     <div class="eight wide column">
-      <h2>My Requests</h2>
+      <h2>Incoming Requests</h2>
     </div>
     <div class="eight wide column">
       <a href="/requests/new" class="ui right floated normal primary labeled icon button">
@@ -37,20 +39,27 @@
   <table class="ui red celled unstackable table">
     <thead>
       <tr>
+        <th>Employee</th>
         <th>Type</th>
         <th>Starting</th>
         <th>Ending</th>
         <th>Days</th>
-        <th>Assigned To</th>
         <th>Status</th>
         <th>Action</th>
+
       </tr>
     </thead>
     <tbody>
       <%@requests.each do |request| %>
       <tr class="<%='positive' if request.approved? %>
                  <%='negative' if request.denied? %>">
-        <td><strong><%= t "request_absense_type.#{request.absense_type}" %></strong>
+
+        <td>
+          <strong><%= request.user.name %></strong>
+          <p class="detail"><%= request.user.position %></p>
+        </td>
+        <td>
+          <strong><%= t "request_absense_type.#{request.absense_type}" %></strong>
           Absense</td>
         <td>
           <% if request.partial? %>
@@ -71,30 +80,27 @@
         </td>
         <td class="collapsing center aligned">
           <% unless request.partial? %>
-          <a class="ui circular label"><%=  request.days_off %>
+          <a class="ui circular label"><%= request.days_off %>
 
           </a>
           <% end %>
         </td>
-        <td><%= request.user_assigned.name %></td>
+
         <td >
           <strong><%= I18n.t "request_status.#{request.status}" %></strong>
         </td>
         <td class="collapsing">
-            <% unless request.requested? %>
-          <button class="ui tiny basic button modal-trigger">
-            <i class="comment icon"></i>
-            Response
-          </button>
+          <div class="request_response_container" style="display:none"><%= request.response %></div>
+          <% if request.requested? %>
+          <a href="<%= request_path(request) %>" class="ui tiny basic  button modal-trigger">
+            <i class="unhide icon"></i>
+            View
+          </a>
           <% end %>
         </td>
       </tr>
-  <% unless request.requested? %>
-      <tr style="display:none"><td colspan="7">
-<h5><%= request.user_assigned.name %> response:</h5>
-        <%= request.response %></td></tr>
       <% end %>
-<% end %>
+
     </tbody>
   </table>
 </div>

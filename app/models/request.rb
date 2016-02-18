@@ -29,13 +29,18 @@ class Request < ActiveRecord::Base
 
   # Validate these fields only for non partial absense types
   validates :partial_starting, :time_starting,
-            :time_ending, presence: true, if: :is_partial? && :new_record?
+            :time_ending, presence: true, if: :is_partial_and_new
 
   after_initialize :set_default_values
 
   def set_default_values
     # Set default absense_type
     self.absense_type ||= Request.absense_types[:full]
+  end
+
+  def is_partial_and_new
+p self.partial? && self.new_record?
+    partial? && new_record?
   end
 
   def is_partial?

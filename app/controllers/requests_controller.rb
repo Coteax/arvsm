@@ -36,9 +36,10 @@ class RequestsController < ApplicationController
     elsif params['deny']
       @request.status = Request.statuses[:denied]
     end
+
     if @request.update_attributes(update_params)
       redirect_to root_path
-    else
+    else          
       render 'show'
     end
   end

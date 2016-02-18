@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Arvsm</title>
+    <title>Arvddsm</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -24,8 +24,12 @@
         <a class=" item">
           Dashboard
         </a>
+
         <div class="right menu">
-          <%= link_to "Log out", logout_path, method: :delete,class:'ui item' %>
+          <div class="vertically fitted red item">
+      <%=current_user.name %>
+    </div> 
+         <%= link_to "Log out", logout_path, method: :delete,class:'ui item' %>
         </div>
       </div>
     <% else %>
