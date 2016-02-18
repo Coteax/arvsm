@@ -1,5 +1,5 @@
 ##ARVSM
-
+Absence Request and Vacation Schedule Management
 ##Case
 An ordinary way for any employee to request an approval to leave for some hours/days off the office is to send an email to the HR department and his Reporting manager. Then both parties approve or deny the request, resulting in an overload of communications over emails, messengers etc.
 ##Solution
@@ -24,8 +24,14 @@ This application allows every employee, no matter his position, to place an abse
 
 ![Imgur](http://i.imgur.com/DhFaaWf.png)
 
-##Specifications
+###Instructions
+In order to run the application
+- `bundle install` Install required gems
+- `db:setup` Setup and seed the database
+- `rails s` Run embedded rails server
+
+###Specifications
 - Ruby on Rails v4.2.x
-- PostgreSQL
+- PostgreSQL 8.4
 - RSpec
 - Semantic UI 2.1.8
