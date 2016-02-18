@@ -15,24 +15,21 @@ class RequestsController < ApplicationController
     @request.user = current_user
     # Set request status to Requested
     @request.status = Request.statuses[:requested]
-    # TODO: dates
+    
     if @request.partial?
-      p @request.starting
-      p @request.partial_starting
       time = Time.parse(@request.time_starting)
-
-      date_starting = DateTime.parse(@request.partial_starting)
-      time = date_starting.change(hour: time.hour)
+      time = @request.partial_starting
+                     .change(hour: time.hour,
+                             minute: time.min)
       @request.starting = time
       time = Time.parse(@request.time_ending)
-      time = date_starting.change(hour: time.hour)
+      time = @request.partial_starting.change(hour: time.hour)
       @request.ending = time
     end
 
     if @request.save
       # Send email to assigned manager
       Mailer.notify_incoming_request.deliver_later
-
       flash[:success] = 'Your absense request has been submitted successfully!'
       redirect_to root_path
     else
@@ -63,6 +60,7 @@ class RequestsController < ApplicationController
   end
 
   private
+
   # Allowed parameters for request creation
   def create_params
     params.require(:request).permit(:description, :absense_type,

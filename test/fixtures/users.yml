@@ -2,14 +2,14 @@
 
 one:
   name: MyString
-  email: MyString
+  email: mail1@domain.com
   position: MyString
   password_digest: MyString
   is_manager: false
 
 two:
   name: MyString
-  email: MyString
+  email: mail2@domain.com
   position: MyString
   password_digest: MyString
   is_manager: false
