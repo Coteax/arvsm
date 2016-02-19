@@ -87,16 +87,15 @@
     <div id="absense_partial_fields" class="fields">
       <div class="field">
         <label>Absense Date</label>
-        <%= f.text_field :partial_starting  %>
-
+        <%= f.text_field :partial_starting , value: @request.partial_starting %>
       </div>
       <div class="field">
         <label>Hour Start</label>
-        <%= f.text_field :time_starting %>
+        <%= f.text_field :time_starting , value: @request.time_starting %>
       </div>
       <div class="field">
         <label>Hour End</label>
-        <%= f.text_field :time_ending %>
+        <%= f.text_field :time_ending , value: @request.time_ending %>
       </div>
     </div>
 
