@@ -51,11 +51,9 @@ class Request < ActiveRecord::Base
   end
 
   def partial_starting
-    logger.debug "READ #{ @partial_starting}"
     @partial_starting
   end
   def partial_starting=(val)
-    logger.debug "SET TO#{val}  #{val.class}"
     @partial_starting=val
   end
   def is_partial?
