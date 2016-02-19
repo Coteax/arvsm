@@ -28,6 +28,7 @@ en:
         starting: "Starting Date"
         ending: "Ending Date"
         days_off: "Working Days"
+        partial_starting: "Absense Date"
   request_status:
     requested: "Requested"
     approved: "Approved"
@@ -36,3 +37,5 @@ en:
     full: "Full"
     sickness: "Sickness"
     partial: "Partial"
+  errors.models.request.attributes.starting:
+    on_or_after: ""

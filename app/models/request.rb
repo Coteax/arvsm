@@ -23,19 +23,24 @@ class Request < ActiveRecord::Base
   validates :description, length: { minimum: 20 }
 
   # Validate these attributes only for non partial absense types
-  validates :starting, :ending,
-            :days_off, presence: true,
-                       unless: :is_partial?
-  validates :days_off,
-            numericality: { only_integer: true,
-                            greater_than_or_equal_to: 1 },
-            unless: :is_partial?
+  with_options unless: :is_partial? do |np|
+    # Absense starting date should be after tommorow
+    np.validates_date :starting, :on => :create, :on_or_after => :today
+    # Absense ending date should be after starting
+    np.validates_date :ending, :on => :create, :after => :starting
 
+    np.validates      :days_off,
+                       numericality: { only_integer: true,
+                                       greater_than_or_equal_to: 1 }
+
+  end
   # Validate these fields only for partial absense type
-  validates :partial_starting, :time_starting,
-            :time_ending, presence: true,
-                          if: :is_partial_and_new
+  with_options if: :is_partial?,on: :create do |p|
+    p.validates_date :partial_starting, :on_or_after => :today
+    p.validates :time_starting,
+                :time_ending, presence: true
 
+  end
   # Initialize to Request status
   after_initialize :set_default_values
 

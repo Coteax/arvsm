@@ -37,12 +37,14 @@ class RequestsController < ApplicationController
 
 
     if @request.save
-
       # Send email to assigned manager
       Mailer.notify_incoming_request(@request).deliver_later
       flash[:success] = 'Your absense request has been submitted successfully!'
       redirect_to root_path
     else
+      dummy_request = Request.new(create_params)
+      @request.starting=dummy_request.starting
+      @request.ending=dummy_request.ending
       render :new
     end
   end
