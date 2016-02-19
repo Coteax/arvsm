@@ -5,9 +5,10 @@ class Mailer < ApplicationMailer
   #
   #   en.mailer.notify_incoming_request.subject
   #
-  def notify_incoming_request
-    mail(to: "kadmos@gmail.com",
-         subject: "Gates Martin made an absense request")
+  def notify_incoming_request(request)
+    @request=request
+    mail(to: request.user_assigned.email,
+         subject: "#{request.user.name} made an absense request")
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -15,8 +16,9 @@ class Mailer < ApplicationMailer
   #
   #   en.mailer.notify_changed_request_status.subject
   #
-  def notify_changed_request_status
-    mail(to: "kadmos@gmail.com",
-         subject: "Gates Martin your request has")
+  def notify_changed_request_status(request)
+    @request=request
+    mail(to: request.user.email,
+         subject: "#{request.user.name} your request has been #{I18n.t "request_status.#{request.status}"}")
   end
 end

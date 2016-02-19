@@ -1,5 +1,9 @@
-<h1>X X, your request has been</h1>
+<h2><%= @request.user.name %>, your request has been
+  <%=(I18n.t "request_status.#{@request.status}").downcase%></h2>
 
 <p>
-   Your request for has been aprroved. Click<a href="#">here</a> for details.
+  Your request for has been
+  <%=(I18n.t "request_status.#{@request.status}").downcase%>. Click
+  <a href="/">here</a>
+  for details.
 </p>

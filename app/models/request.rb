@@ -9,7 +9,7 @@ class Request < ActiveRecord::Base
                        partial: 'absense_partial' }
 
   # Non persisted virtual atrributes for partial absense functionality
-  attr_accessor :partial_starting_v, :time_starting, :time_ending
+  attr_accessor :partial_starting, :time_starting, :time_ending
 
   # Setup relations
   belongs_to :user
@@ -52,13 +52,4 @@ class Request < ActiveRecord::Base
     partial?
   end
 
-  def partial_starting
-    @partial_starting_v
-   end
-
-  def partial_starting=(val)
-    @partial_starting_v = DateTime.parse(val)
-
-    # partial_starting_v = nil
-  end
 end

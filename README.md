@@ -41,6 +41,6 @@ In order to run the application
 
 ###Specifications
 - Ruby on Rails v4.2.x
-- PostgreSQL 8.4
+- PostgreSQL 9.x
 - RSpec
 - Semantic UI 2.1.8
