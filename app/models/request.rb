@@ -8,8 +8,9 @@ class Request < ActiveRecord::Base
                        sickness: 'absense_sickness',
                        partial: 'absense_partial' }
 
+
   # Non persisted virtual atrributes for partial absense functionality
-  attr_accessor :partial_starting, :time_starting, :time_ending
+  attr_accessor  :time_starting, :time_ending
 
   # Setup relations
   belongs_to :user
@@ -37,8 +38,8 @@ class Request < ActiveRecord::Base
   # Validate these fields only for partial absense type
   with_options if: :is_partial?,on: :create do |p|
     p.validates_date :partial_starting, :on_or_after => :today
-    p.validates :time_starting,
-                :time_ending, presence: true
+    p.validates_time :time_starting
+    p.validates_time :time_ending, :after => :time_starting
 
   end
   # Initialize to Request status
@@ -49,10 +50,14 @@ class Request < ActiveRecord::Base
     self.absense_type ||= Request.absense_types[:full]
   end
 
-  def is_partial_and_new
-    partial? && new_record?
+  def partial_starting
+    logger.debug "READ #{ @partial_starting}"
+    @partial_starting
   end
-
+  def partial_starting=(val)
+    logger.debug "SET TO#{val}  #{val.class}"
+    @partial_starting=val
+  end
   def is_partial?
     partial?
   end

@@ -37,7 +37,7 @@
 <div class="ui segment">
   <div class="ui form <%= @request.errors.any? ? 'error' : '' %>">
     <h3 class="ui dividing header">Create a New Absense Request</h3>
-    <%= form_for(@request) do |f| %>
+
     <div class="ui error message">
       <div class="header">Please fix the following errors</div>
       <ul class="list">
@@ -46,7 +46,7 @@
         <% end %>
       </ul>
     </div>
-
+<%= form_for(@request) do |f| %>
     <div class="inline fields">
       <label>Select your absense type</label>
       <div class="field">
@@ -88,6 +88,7 @@
       <div class="field">
         <label>Absense Date</label>
         <%= f.text_field :partial_starting  %>
+
       </div>
       <div class="field">
         <label>Hour Start</label>
