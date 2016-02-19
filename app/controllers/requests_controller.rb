@@ -16,8 +16,7 @@ class RequestsController < ApplicationController
     # Set request status to Requested
     @request.status = Request.statuses[:requested]
 
-    if @request.partial?
-
+    if @request.partial? && @request.valid?
       begin
         # Keep user supplied values in case of validation error
         @original_starting = @request.starting_before_type_cast
@@ -46,8 +45,8 @@ class RequestsController < ApplicationController
       redirect_to root_path
     else
       if @request.partial?
-        @request.starting = @original_starting
-        @request.ending = @original_ending
+      #  @request.starting = @original_starting
+    #    @request.ending = @original_ending
       end
       render :new
     end

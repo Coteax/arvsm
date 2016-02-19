@@ -18,7 +18,7 @@ class Request < ActiveRecord::Base
 
   # Model Validations
   validates :user_id, :user_assigned,
-            :absense_type, :description,
+            :absense_type,
             presence: true
 
   validates :description, length: { minimum: 20 }
