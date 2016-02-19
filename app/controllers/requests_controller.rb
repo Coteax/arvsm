@@ -19,10 +19,11 @@ class RequestsController < ApplicationController
     if @request.partial?
 
       begin
-        # Combine Date and starting time
-
-        @original = @request.starting_before_type_cast
+        # Keep user supplied values in case of validation error
+        @original_starting = @request.starting_before_type_cast
         @original_ending = @request.ending_before_type_cast
+
+        # Combine Date and starting time
         time = Time.parse(@request.time_starting)
         @request.starting = Time.parse(@request.partial_starting)
                                 .change(hour: time.hour,
@@ -40,13 +41,12 @@ class RequestsController < ApplicationController
 
     if @request.save
       # Send email to assigned manager
-
       Mailer.notify_incoming_request(@request).deliver_later
       flash[:success] = 'Your absense request has been submitted successfully!'
       redirect_to root_path
     else
       if @request.partial?
-        @request.starting = @original
+        @request.starting = @original_starting
         @request.ending = @original_ending
       end
       render :new
