@@ -12,11 +12,13 @@ This application allows every employee, no matter his position, to place an abse
 - In addition they should provide a comment
 - After submiting their request they could view their past requests  in tabular form along with their statuses
 - After request gets approved or denied from the assigned manager, request changes status and requesters can view their status and an additional comment from the manager
+- Requesters receive an email when their request gets approved or denied
 
 ###Features for Managers
 - Managers can view incoming requests in a tabular view
 - Managers can optionally include a response to the requester
 - Managers can approve or deny a request
+- Managers receive email when a new request assigned to them arrives
 
 ###Screenshots
 
